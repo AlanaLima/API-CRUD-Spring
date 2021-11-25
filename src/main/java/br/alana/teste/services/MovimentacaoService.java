@@ -14,18 +14,18 @@ import java.util.Optional;
 @Service
 public class MovimentacaoService {
     @Autowired
-    private ContaRepository contaRepository;
+    private ContaService contaservice;
     @Autowired
     private TransacaoService transacaoservice;
     @Transactional
-    public void Transferir(Transacao transacao){
+    public void Transferir(Transacao transacao) {
         //achar conta envia pelos ids
-        Optional<Conta> contaenvia=contaRepository.findById((transacao.getIdcontaenvia()));
-        Conta contarecebedora=contaRepository.findById((transacao.getIdcontarecebe()));
+        Conta contaenvia = contaservice.listarporId((transacao.getIdcontaenvia()));
+        Conta contarecebedora = contaservice.listarporId((transacao.getIdcontarecebe()));
         //fazer a transferencia
-        contaenvia.setSaldo(contaenvia.getSaldo()-(transacao.getValor()));
-        contarecebedora.setSaldo(contarecebedora.getSaldo()+(transacao.getValor()));
-
+        contaenvia.setSaldo(contaenvia.getSaldo() - (transacao.getValor()));
+        contarecebedora.setSaldo(contarecebedora.getSaldo() + (transacao.getValor()));
+    }
     }
 
     //metodo para na hora que dar o get pegar as transacoes tb da conta
@@ -34,7 +34,7 @@ public class MovimentacaoService {
 //        Long idconta=conta.getIdconta();
 //        //ver todas transacoes Loop por ele tudo
 //        transacaoservice.listar();
-        }
+
         //Se
         //transacoes com idcontaenvia igual a id conta
         //retorna essas transacoes como debito
@@ -47,5 +47,4 @@ public class MovimentacaoService {
 //            return transacao;
 //        }
 
-    }
-}
+
