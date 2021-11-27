@@ -11,6 +11,8 @@ public class Conta {
     private long idconta;
     @Column(name="agencia")
     private String agencia;
+    @Column(name="conta")
+    private Long Nconta;
     @Column(name="saldo")
     private Double saldo;
 
@@ -43,11 +45,11 @@ public class Conta {
         this.saldo = saldo;
     }
 
-//    public User getUser() {
-//        return user;
-//    }
-//
-//    public void setUser(User user) {
-//        this.user = user;
-//    }
+    public Long getNconta() {
+        return Nconta;
+    }
+
+    public void setNconta(Long nconta) {
+        Nconta = nconta;
+    }
 }

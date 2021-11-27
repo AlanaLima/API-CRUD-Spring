@@ -17,8 +17,12 @@ public class Transacao {
     @Column(name="idcontaenvia")
     private Long Idcontaenvia;
 
-    @Column(name="idcontarecebe")
-    private Long Idcontarecebe;
+    @Column(name="contarecebe")
+    private Long contarecebe;
+
+//    @Column(name="idcontarecebe")
+//    private Long Idcontarecebe;
+
 
     public long getIdtransacao() {
         return idtransacao;
@@ -44,11 +48,11 @@ public class Transacao {
         Idcontaenvia = idcontaenvia;
     }
 
-    public Long getIdcontarecebe() {
-        return Idcontarecebe;
+    public Long getContarecebe() {
+        return contarecebe;
     }
 
-    public void setIdcontarecebe(Long idcontarecebe) {
-        Idcontarecebe = idcontarecebe;
+    public void setContarecebe(Long contarecebe) {
+        this.contarecebe = contarecebe;
     }
 }

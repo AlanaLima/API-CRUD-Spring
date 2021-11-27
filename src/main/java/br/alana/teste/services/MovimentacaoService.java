@@ -2,8 +2,10 @@ package br.alana.teste.services;
 
 import br.alana.teste.models.Conta;
 import br.alana.teste.models.Transacao;
+import br.alana.teste.models.User;
 import br.alana.teste.repository.ContaRepository;
 import br.alana.teste.repository.TransacaoRepository;
+import br.alana.teste.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,36 +17,33 @@ import java.util.Optional;
 public class MovimentacaoService {
     @Autowired
     private ContaService contaservice;
+
     @Autowired
-    private TransacaoService transacaoservice;
+    private TransacaoRepository transacaorepository;
+
+    @Autowired
+    private ContaRepository contaRepository;
+
     @Transactional
     public void Transferir(Transacao transacao) {
-        //achar conta envia pelos ids
         Conta contaenvia = contaservice.listarporId((transacao.getIdcontaenvia()));
-        Conta contarecebedora = contaservice.listarporId((transacao.getIdcontarecebe()));
-        //fazer a transferencia
+        Conta contarecebedora=contaRepository.findByConta(transacao.getContarecebe());
+
         contaenvia.setSaldo(contaenvia.getSaldo() - (transacao.getValor()));
         contarecebedora.setSaldo(contarecebedora.getSaldo() + (transacao.getValor()));
     }
+
+    public List<Transacao> PegarTransacoesContaDebito(Long idconta){
+        return transacaorepository.findBycontaenviaId(idconta);
     }
+    public List<Transacao> PegarTransacoesContaCredito(Long idconta){
+        Conta contarecebedora=contaservice.listarporId(idconta);
+        return transacaorepository.findBycontarecebe(contarecebedora.getNconta());
+    }
+}
 
-    //metodo para na hora que dar o get pegar as transacoes tb da conta
-    //get um por id, vem uma conta, vamos fazer esse por enquanto
-//    public void PegarTransacoesConta(Conta conta){
-//        Long idconta=conta.getIdconta();
-//        //ver todas transacoes Loop por ele tudo
-//        transacaoservice.listar();
 
-        //Se
-        //transacoes com idcontaenvia igual a id conta
-        //retorna essas transacoes como debito
-        //Se transacoes com idcontarecebedora igual a id conta
-        //retorna essas transacoes como credito
-//        if(idconta== transacao.getIdcontaenvia()){
-//            return transacao;
-//        }
-//        if(idconta== transacao.getIdcontaenvia()){
-//            return transacao;
-//        }
+
+
 
 
